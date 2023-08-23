@@ -1,0 +1,12 @@
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  isAdmin BOOLEAN DEFAULT false
+);
+
+CREATE TABLE counter (
+  id SERIAL PRIMARY KEY,
+  value INT NOT NULL,
+  record_time TIMESTAMPTZ NOT NULL
+);
