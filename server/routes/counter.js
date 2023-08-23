@@ -1,18 +1,14 @@
 const { Router } = require('express');
 const counter = require('../Counter');
 const pool = require('../db');
-const {
-  checkAdmin,
-} = require('../middlewares/checkAdmin.middleware');
-const {
-    checkUser,
-  } = require('../middlewares/checkUser.middleware');
+const { checkAdmin } = require('../middlewares/checkAdmin.middleware');
+const { checkUser } = require('../middlewares/checkUser.middleware');
 
 const router = Router();
 
 router.get('/counter', checkUser, (req, res) => {
   const currentValue = counter.value;
-  res.json({ counter: currentValue });
+  res.json({ value: currentValue });
 });
 
 router.post('/counter/increment', checkAdmin, (req, res) => {

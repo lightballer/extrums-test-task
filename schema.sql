@@ -2,7 +2,7 @@ CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
-  isAdmin BOOLEAN DEFAULT false
+  is_admin BOOLEAN DEFAULT false
 );
 
 CREATE TABLE counter (

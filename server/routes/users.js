@@ -19,16 +19,19 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const insertQuery =
-      'INSERT INTO users (username, password, isAdmin) VALUES ($1, $2, $3) RETURNING id';
+      'INSERT INTO users (username, password, is_admin) VALUES ($1, $2, $3) RETURNING id';
     const insertResult = await pool.query(insertQuery, [
       username,
       hashedPassword,
-      isAdmin
+      isAdmin,
     ]);
 
     const userId = insertResult.rows[0].id;
 
-    const token = jwt.sign({ id: userId, username, isAdmin }, process.env.JWT_SECRET_KEY);
+    const token = jwt.sign(
+      { id: userId, username, isAdmin },
+      process.env.JWT_SECRET_KEY,
+    );
 
     res.json({ token });
   } catch (error) {
@@ -54,9 +57,8 @@ router.post('/login', async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Authentication failed' });
     }
-
     const token = jwt.sign(
-      { id: user.id, username: user.username, isAdmin: user.isAdmin },
+      { id: user.id, username: user.username, isAdmin: user.is_admin },
       process.env.JWT_SECRET_KEY,
     );
 
